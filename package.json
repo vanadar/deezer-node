@@ -2,13 +2,17 @@
   "name": "deezer-node",
   "version": "0.1.0",
   "description": "a wrapper for listening deezer with a desktop app",
-  "main": "index.js",
+  "main": "src/index.html",
   "dependencies": {
     "nw": "^0.12.3"
   },
-  "devDependencies": {},
+  "devDependencies": {
+    "grunt": "^0.4.5",
+    "grunt-cli": "^0.1.13",
+    "grunt-nw-builder": "^2.0.0"
+  },
   "scripts": {
-    "start": "nw src/index.js",
+    "start": "nw src/index.html",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [
@@ -19,5 +23,15 @@
     "application"
   ],
   "author": "Vanadar",
-  "license": "ISC"
+  "license": "ISC",
+  "window": {
+    "title": "Deezser",
+    "toolbar": false,
+    "width": 960,
+    "height": 640
+  },
+  "webkit": {
+    "plugin": true
+  },
+  "chromium-args": "--ppapi-flash-path=/usr/lib/pepperflashplugin-nonfree/libpepflashplayer.so"
 }
