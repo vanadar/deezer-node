@@ -1,0 +1,23 @@
+{
+  "name": "deezer-node",
+  "version": "0.1.0",
+  "description": "a wrapper for listening deezer with a desktop app",
+  "main": "index.js",
+  "dependencies": {
+    "nw": "^0.12.3"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "start": "nw src/index.js"
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "deezer",
+    "nw",
+    "nw.js",
+    "desktop",
+    "application"
+  ],
+  "author": "Vanadar",
+  "license": "ISC"
+}
