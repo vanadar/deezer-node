@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "description": "a wrapper for listening deezer with a desktop app",
   "main": "src/index.html",
+  "node-main": "src/index.js",
   "dependencies": {
     "nw": "^0.12.3"
   },
