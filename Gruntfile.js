@@ -6,7 +6,7 @@ module.exports = function(grunt) {
         nwjs:{
             options: {
                 platforms: ['linux'],
-                buildDir: './bin',
+                buildDir: './build',
                 // must write the version (its not using the one given in the package.json but a pre-release)
                 version: 'v0.12.3'
             },

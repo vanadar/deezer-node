@@ -5,7 +5,6 @@
   "main": "src/index.html",
   "node-main": "src/index.js",
   "dependencies": {
-    "dbus": "^0.2.14",
     "mpris-service": "^1.1.0",
     "nw": "^0.12.3"
   },
@@ -15,7 +14,7 @@
     "grunt-nw-builder": "^2.0.0",
     "grunt-nw-gyp": "^0.5.0",
     "node-pre-gyp": "^0.6.18",
-    "nw-gyp": "^0.13.0"
+    "nw-gyp": "^0.12.3"
   },
   "scripts": {
     "start": "nw src/index.html",
