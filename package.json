@@ -5,6 +5,7 @@
   "main": "src/index.html",
   "node-main": "src/index.js",
   "dependencies": {
+    "dbus": "vanadar/node-dbus",
     "mpris-service": "^1.1.0",
     "nw": "^0.12.3"
   },
@@ -17,8 +18,7 @@
     "nw-gyp": "^0.12.3"
   },
   "scripts": {
-    "start": "nw src/index.html",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "nw src/index.html"
   },
   "keywords": [
     "deezer",
