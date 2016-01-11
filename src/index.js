@@ -2,75 +2,109 @@
  * Created by vanadar on 30/12/15.
  */
 exports.init = function(w) {
-
-    window.location = 'http://www.deezer.com';
-
-    var gui = window.require('nw.gui');
-    //gui.Window.get().showDevTools();
+    //window.location.href = 'http://www.deezer.com';
 
     var Player = require('mpris-service');
 
-    var player = Player({
+    var mprisPlayer = Player({
         name: 'deezernode',
-        identity: 'Deezer player',
+        identity: 'Deezer Node',
         supportedUriSchemes: ['file'],
         supportedMimeTypes: ['audio/mpeg', 'application/ogg'],
-        supportedInterfaces: ['player']
+        supportedInterfaces: ['player'],
     });
 
-    var getPlayer = function(){
+    var getPlayer = function () {
         return window.dzPlayer;
     };
 
-    var isPlaying = function(){
+    var isPlaying = function () {
         return getPlayer().isPlaying();
     };
 
-    var updateMeta = function(){
-        player.metadata = songInfo = {
-            'mpris:artUrl': '',
-            // Convert milliseconds to microseconds (1s = 1e3ms = 1e6µs)
-            'mpris:length': window.dzPlayer.getCurrentSong().DURATION * 1e3,
-            'xesam:album': '',
-            'xesam:artist': '',
-            'xesam:title': window.dzPlayer.getCurrentSong().SNG_TITLE
+    var updateMeta = function () {
+        mprisPlayer.metadata = {
+            'mpris:artUrl': 'http://cdn-images.deezer.com/images/cover/' + getPlayer().getCover() + '/250x250.jpg',
+            'mpris:length': getSongLength(),
+            'xesam:album': getPlayer().getAlbumTitle(),
+            'xesam:artist': getPlayer().getArtistName(),
+            'xesam:title': getPlayer().getCurrentSong().SNG_TITLE
         };
     };
 
-    var play = function(){
+    var play = function () {
         getPlayer().control.play();
-        updateMeta();
-        player.playbackStatus = 'Playing';
+        mprisPlayer.playbackStatus = 'Playing';
     };
 
-    var pause = function(){
-        player.playbackStatus = 'Paused';
+    var pause = function () {
+        mprisPlayer.playbackStatus = 'Paused';
         getPlayer().control.pause();
     };
 
-    var stop = function(){
-        running = false;
-        player.playbackStatus = 'Stopped';
+    var stop = function () {
+        mprisPlayer.playbackStatus = 'Stopped';
         getPlayer().control.stop();
     };
 
-    var next = function(){
+    var next = function () {
         getPlayer().control.nextSong();
     };
 
-    var prev = function(){
+    var prev = function () {
         getPlayer().control.prevSong();
     };
 
+    var getSongLength = function(){
+        return parseInt(getPlayer().getCurrentSong().DURATION) * 1e6;
+    };
 
-    player.on("playpause", function(){
+    var setPosition = function(o, x){
+        var p = (x/getSongLength()).toFixed(3);
+        getPlayer().control.seek(p);
+    };
+
+    var raise = function(){
+        win.show();
+        win.focus();
+    };
+
+    mprisPlayer.on("play", play);
+    mprisPlayer.on("pause", pause);
+    mprisPlayer.on("stop", stop);
+    mprisPlayer.on("next", next);
+    mprisPlayer.on("previous", prev);
+    mprisPlayer.on("raise", raise);
+    mprisPlayer.on("position", setPosition);
+    mprisPlayer.on("playpause", function(){
         if(isPlaying()) pause();
         else play();
     });
 
-    player.on("play", play);
-    player.on("pause", pause);
-    player.on("stop", stop);
-    player.on("next", next);
-    player.on("previous", prev);
+    var onDeezerReady = function(){
+        win.window.console.debug("onDeezerReady");
+        win.window.document.mp = mprisPlayer;
+        win.window.document.sk = seek;
+
+        var Events = window.Events;
+        var group = 'deezer-node';
+        updateMeta();
+        Events.subscribe(Events.player.notify, updateMeta, group);
+        Events.subscribe(Events.player.position, function (e, t){
+            mprisPlayer.position = t*1e6;
+        }, group);
+    };
+
+    var gui = window.require('nw.gui');
+    var win = gui.Window.get();
+
+    win.window.location.href = 'http://www.deezer.com';
+
+    setTimeout(function(){
+        console.log("prout");
+        console.debug("pde");
+        onDeezerReady();
+        win.window.console.log("ok");
+    }, 5000);
+
 };

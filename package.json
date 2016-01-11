@@ -27,13 +27,14 @@
     "desktop",
     "application"
   ],
-  "author": "Vanadar",
+  "author": "Vanadar <vanadar.univers@gmail.com>",
   "license": "ISC",
   "window": {
-    "title": "Deezser",
+    "title": "Deezer",
     "toolbar": false,
     "width": 960,
-    "height": 640
+    "height": 640,
+    "icon": "src/deezer.png"
   },
   "webkit": {
     "plugin": true
