@@ -10,7 +10,7 @@ install packages
 `npm install`
 
 
-You need to recompile dbus witwh nw-gyp:
+You need to recompile dbus with nw-gyp:
 
 1. install the following packages:
 
